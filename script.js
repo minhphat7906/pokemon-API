@@ -1,7 +1,7 @@
 const container = document.querySelector(".pokemon-container");
 const searchInput = document.querySelector("#searchPokemon");
 let fullPokemon = [];
-let visiblePokemonCount = 12;
+let visiblePokemonCount = 24;
 const loadMoreButton = document.querySelector(".load-more-button");
 
 async function loadPokemon() {
@@ -47,7 +47,7 @@ function showLoading() {
   container.innerHTML = "Loading...";
 }
 function loadMorePokemon() {
-  visiblePokemonCount += 12;
+  visiblePokemonCount += 24;
   const nextPokemon = fullPokemon.slice(0, visiblePokemonCount);
   displayPokemon(nextPokemon);
 }
