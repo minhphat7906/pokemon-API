@@ -6,7 +6,7 @@ const loadMoreButton = document.querySelector(".load-more-button");
 
 async function loadPokemon() {
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1034`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1034`);
     const data = await res.json();
     const dataPokemon = await Promise.all(
       data.results.map(async (pokemon) => {
@@ -21,26 +21,27 @@ async function loadPokemon() {
     container.innerHTML = "Try again";
   }
 }
-function displayPokemon(pokemonData) {
+async function displayPokemon(pokemonData) {
   const HTML = pokemonData
-    .map((response) => {
-      const types = response.types.map((typeInfo) => typeInfo.type.name);
-      return `<div class="pokemon-list">
-              <div class="id">#${response.id}</div>
-              <img src="${response.sprites.other.home.front_default}" alt="${response.name}"/>
-              <div class="pokemon-info">
-                <div id="pokemonName" class="title">${response.name}</div>
-                <div class="types">${types
-                  .map(
-                    (type) =>
-                      `<span class="type ${type.toLowerCase()}">${type}</span>`
-                  )
-                  .join("")}
-                </div>
+  .map((response) => {
+    const types = response.types.map((typeInfo) => typeInfo.type.name);
+    const img_herf = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${response.id}.png`;
+    return `<div class="pokemon-list">
+            <div class="id">#${response.id}</div>
+            <img src="${img_herf}" alt="${response.name}"/>
+            <div class="pokemon-info">
+              <div id="pokemonName" class="title">${response.name}</div>
+              <div class="types">${types
+                .map(
+                  (type) =>
+                    `<span class="type ${type.toLowerCase()}">${type}</span>`
+                )
+                .join("")}
               </div>
-            </div>`;
-    })
-    .join("");
+            </div>
+          </div>`;
+  })
+  .join("");
   container.innerHTML = HTML;
 }
 function showLoading() {
